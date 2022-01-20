@@ -1,8 +1,8 @@
 const db = require("../../db/db");
-const { BadRequestError, NotFoundError } = require("../../expressError");
+const { BadRequestError, NotFoundError } = require("../expressError");
 
 class Map {
-  static async create({ data, userID }) {
+  static async create({ data }) {
     function duplicateCheck() {}
     function addMap() {}
     duplicateCheck();

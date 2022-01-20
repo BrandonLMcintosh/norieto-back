@@ -97,8 +97,8 @@ describe("ensureCorrectUser", function () {
 
   test("fails: anonymous", function () {
     expect.assertions(1);
-    const req = { params: { username: "test" } };
-    const res = { locals: {} };
+    const req = { params: {} };
+    const res = { locals: { user: { username: "test" } } };
     const next = function (err) {
       expect(err instanceof UnauthorizedError).toBeTruthy();
     };
