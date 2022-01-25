@@ -2,11 +2,13 @@
 
 const db = require("../../db/db");
 const bcrypt = require("bcrypt");
+
 const {
   BadRequestError,
   NotFoundError,
   UnauthorizedError,
 } = require("../../expressError");
+
 const { BCRYPT_WORK_FACTOR } = require("../../config/config");
 
 class User {
@@ -15,11 +17,11 @@ class User {
       `SELECT username
        FROM users
        WHERE username = $1`,
-       [username]
+      [username]
     );
 
-    if(duplicateCheck.rows[0]){
-      throw new BadRequestError(`User already exists: ${username}`)
+    if (duplicateCheck.rows[0]) {
+      throw new BadRequestError(`User already exists: ${username}`);
     }
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
@@ -31,8 +33,8 @@ class User {
         map)
         VALUES ($1, $2, $3)
         RETURNING username, map`,
-        [username, hashedPassword, {}]
-    )
+      [username, hashedPassword, {}]
+    );
 
     const user = result.rows[0];
 
@@ -46,14 +48,14 @@ class User {
               map
        FROM users
        WHERE username = $1`,
-       [username]
+      [username]
     );
 
     const user = result.rows[0];
 
-    if(user){
+    if (user) {
       const isValid = await bcrypt.compare(password, user.password);
-      if(isValid){
+      if (isValid) {
         delete user.password;
         return user;
       }

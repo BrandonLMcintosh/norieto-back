@@ -1,18 +1,6 @@
 const db = require("../../db/db");
 const { BadRequestError, NotFoundError } = require("../expressError");
 
-const {
-  commonAfterAll,
-  commonBeforeAll,
-  commonAfterEach,
-  commonBeforeEach,
-} = require("../_testCommon");
-
-afterAll(commonAfterAll);
-afterEach(commonAfterEach);
-beforeAll(commonBeforeAll);
-beforeEach(commonBeforeEach);
-
 class Map {
   static async update(data, username) {
     const result = await db.query(

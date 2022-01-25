@@ -1,35 +1,50 @@
 "use strict";
 
-const jsonschema = require("jsonschema");
-const Map = require("../../models/map/map");
 const express = require("express");
 const router = new express.router();
-const mapPostSchema = require("../../schemas/map/mapNew.json");
+
+const jsonschema = require("jsonschema");
+const mapUpdateSchema = require("../../schemas/user/mapUpdate.json");
+
 const { BadRequestError } = require("../../expressError");
 const {
   authenticateJWT,
-  ensureCorrectUserOrAdmin,
+  ensureLoggedIn,
+  ensureCorrectUser,
 } = require("../../middleware/auth");
 
-router.post(
-  "/create",
-  authenticateJWT,
-  ensureCorrectUserOrAdmin,
-  async function () {}
-);
+const Map = require("../../models/map/map");
 
-router.put(
-  "/:id",
+router.post(
+  "/",
   authenticateJWT,
-  ensureCorrectUserOrAdmin,
-  async function () {}
+  ensureLoggedIn,
+  async function (req, res, next) {
+    try {
+      await Map.update(req.body, res.locals.user.username);
+      res.status(200).json({
+        Message: `successful update to user map: ${res.locals.user.username}`,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  }
 );
 
 router.delete(
-  "/:id",
+  "/",
   authenticateJWT,
-  ensureCorrectUserOrAdmin,
-  async function () {}
+  ensureLoggedIn,
+  async function (req, res, next) {
+    try {
+      await Map.delete(res.locals.username);
+      res.status(200).json({
+        Message: `Successful deletion of user map: ${res.locals.user.username}`,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  }
 );
 
 module.exports = router;
