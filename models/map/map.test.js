@@ -1,8 +1,16 @@
-describe("create", () => {
-  test("Succeed: with data", (done) => {});
+const Map = require("./map");
 
-  test("Fail: no data", (done) => {});
-});
+const {
+  commonAfterAll,
+  commonBeforeAll,
+  commonAfterEach,
+  commonBeforeEach,
+} = require("../_testCommon");
+
+afterAll(commonAfterAll);
+afterEach(commonAfterEach);
+beforeAll(commonBeforeAll);
+beforeEach(commonBeforeEach);
 
 describe("update", () => {
   test("Succeed: with data", (done) => {});
@@ -11,25 +19,6 @@ describe("update", () => {
 });
 
 describe("delete", () => {
-  test("Succeed: with good ID", (done) => {});
-
-  test("Fail: no ID", (done) => {});
-
-  test("Fail: bad ID", (done) => {});
-
-  test("Fail: non-owner", (done) => {});
-});
-
-describe("data", () => {
-  test("Good: full JSON", () => {});
-
-  test("Good: empty JSON", () => {});
-
-  test("Good: missing components", () => {});
-
-  test("Good: single object array", () => {});
-
-  test("Bad: incorrect formatting", () => {});
-
-  test("Bad: inconsistent object structure", () => {});
+  test("Pass: with Username", (done) => {});
+  test("Fail: no username", (done) => {});
 });
